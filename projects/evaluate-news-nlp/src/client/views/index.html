@@ -19,15 +19,16 @@
 <main>
     <section>
         <form class="" onsubmit="return Client.handleSubmit(event)">
-            <input id="name" type="text" name="input" value="" placeholder="Name">
+            <input id="url" type="text" name="input" value="" placeholder="Name">
             <input type="submit" name="" value="submit" onclick="return Client.handleSubmit(event)"
-                   onsubmit="return handleSubmit(event)">
+                   onsubmit="return Client.handleSubmit(event)">
         </form>
     </section>
 
-    <section>
+    <section id="res">
         <strong>Form Results:</strong>
-        <div id="results"></div>
+        <div id="agreement"></div>
+        <div id="subjectivity"></div>
     </section>
 </main>
 

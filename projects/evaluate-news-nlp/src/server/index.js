@@ -2,12 +2,14 @@ const path = require('path')
 const express = require('express')
 const dotenv = require('dotenv');
 dotenv.config();
+const cors = require('cors');
 const apiKey = process.env.API_KEY;
 const baseUrl = 'https://api.meaningcloud.com/sentiment-2.1';
 
 const app = express()
-
 app.use(express.static('dist'))
+app.use(express.json())
+app.use(cors({origin: true, credentials: true}));
 
 console.log(__dirname)
 
@@ -17,20 +19,24 @@ app.get('/', function (req, res) {
 
 app.post('/api', async(req, res)=> {
     const url = `${baseUrl}?key=${apiKey}&url=${req.body.url}&lang=en`;
-    const response = await fetch(url)
+    let response;
+    try {
+        response = await fetch(url)
+    } catch (error) {
+        console.log("error", error);
+    }
     try {
         const Data = await response.json();
         let agreement = Data.agreement;
         let subjectivity = Data.subjectivity;
 
         let data = {
-            agreement,
-            subjectivity,
+            "agreement": agreement,
+            "subjectivity": subjectivity
         }
-
+        console.log(data);
         res.send(data);
-    }
-    catch (error) {
+    } catch (error) {
         console.log("error", error);
     }
 
